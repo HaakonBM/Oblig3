@@ -73,6 +73,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     if (tom()) throw new NoSuchElementException("Treet er tomt!");
 
     if (rot.venstre == null) rot = rot.høyre;  // rotverdien er minst
+
     else
     {
       Node<T> p = rot.venstre, q = rot;
@@ -84,7 +85,8 @@ public class ObligSBinTre<T> implements Beholder<T>
       // p er noden med minst verdi
       q.venstre = p.høyre;
     }
-    antall--;  // det er nå én node mindre i treet
+
+    antall--;
   }
 
     throw new UnsupportedOperationException("Ikke kodet ennå!");
