@@ -70,6 +70,23 @@ public class ObligSBinTre<T> implements Beholder<T>
   @Override
   public boolean fjern(T verdi)
   {
+    if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+    if (rot.venstre == null) rot = rot.høyre;  // rotverdien er minst
+    else
+    {
+      Node<T> p = rot.venstre, q = rot;
+      while (p.venstre != null)
+      {
+        q = p;  // q er forelder til p
+        p = p.venstre;
+      }
+      // p er noden med minst verdi
+      q.venstre = p.høyre;
+    }
+    antall--;  // det er nå én node mindre i treet
+  }
+
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
   
