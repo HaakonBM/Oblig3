@@ -44,10 +44,33 @@ public class ObligSBinTre<T> implements Beholder<T>
   }
   
   @Override
-  public boolean leggInn(T verdi)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
-  }
+  public boolean leggInn(T verdi) {
+    Node<T> p = rot;
+    Node<T> q=null;
+
+    int cmp=0;
+    while(p!=null){
+      q=p;
+      cmp= comp.compare(verdi, p.verdi);
+      p= cmp < 0? p.venstre: p.høyre;
+
+    }
+
+    p= new Node<T>(verdi);
+    if (q==null) rot = p;
+    else if (cmp < 0) q.venstre= p;
+    else q.høyre= p;
+    if (q!=null){
+      p.forelder=q;
+    }
+
+    else {
+      p.forelder= null;
+    }
+    antall++;
+    return true;
+
+  }// slutt leggInn
   
   @Override
   public boolean inneholder(T verdi)
