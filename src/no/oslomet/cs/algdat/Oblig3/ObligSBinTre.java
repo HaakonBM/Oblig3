@@ -118,8 +118,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     antall--;   // det er nå én node mindre i treet
     return true;
 
-    //throw new UnsupportedOperationException("Ikke kodet ennå!");
-  }
+  }//fjern slutt
 
   public int fjernAlle(T verdi)////////////Opg 5
   {
@@ -127,7 +126,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     int counter = 0;
 
     if (verdi == null) {
-      throw new NullPointerException;
+      return 0;
     }
 
     Node<T> p = rot, q = null;   // q skal være forelder til p
@@ -176,9 +175,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     counter++;
 
     fjernAlle(verdi);
-
-    //throw new UnsupportedOperationException("Ikke kodet ennå!");
-  }
+  }//fjernAlle slutt
   
   @Override
   public int antall()
@@ -200,11 +197,26 @@ public class ObligSBinTre<T> implements Beholder<T>
   @Override
   public void nullstill()//////////Opg 5
   {
+      Node<T> p = rot, q = null; // q er forelder til p
 
-
-
-
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      while ( rot != null) {
+        p = rot; q= null;
+        while (p.høyre =! null || p.venstre != null) {
+          if(p.høyre != null && p.venstre != null){
+            p = p.venstre;
+          }
+          else if(p.høyre == null) {
+            p = p.venstre;
+          }
+          else if (p.venstre == null){
+            p = p.høyre;
+          }
+        }
+        p.høyre = null;
+        p.venstre = null;
+        p.forelder = null;
+        p.verdi = null;
+      }
   }
   
   private static <T> Node<T> nesteInorden(Node<T> p)
