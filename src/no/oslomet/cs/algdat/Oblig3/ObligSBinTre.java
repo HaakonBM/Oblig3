@@ -44,10 +44,33 @@ public class ObligSBinTre<T> implements Beholder<T>
   }
   
   @Override
-  public boolean leggInn(T verdi)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
-  }
+  public boolean leggInn(T verdi) {
+    Node<T> p = rot;
+    Node<T> q=null;
+
+    int cmp=0;
+    while(p!=null){
+      q=p;
+      cmp= comp.compare(verdi, p.verdi);
+      p= cmp < 0? p.venstre: p.høyre;
+
+    }
+
+    p= new Node<T>(verdi);
+    if (q==null) rot = p;
+    else if (cmp < 0) q.venstre= p;
+    else q.høyre= p;
+    if (q!=null){
+      p.forelder=q;
+    }
+
+    else {
+      p.forelder= null;
+    }
+    antall++;
+    return true;
+
+  }// slutt leggInn
   
   @Override
   public boolean inneholder(T verdi)
@@ -180,12 +203,27 @@ public class ObligSBinTre<T> implements Beholder<T>
   @Override
   public int antall()
   {
+
     return antall;
   }
   
-  public int antall(T verdi)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public int antall(T verdi) {
+    if(verdi==null) return 0;
+
+    int n=0;
+
+    Node<T> p = rot;
+    while (p != null) {
+      int cmp = comp.compare(verdi,p.verdi);
+      if (cmp < 0) p = p.venstre;      // går til venstre
+      else if (cmp > 0) p = p.høyre;   // går til høyre
+      else {
+        n++;
+        p = p.høyre;
+      }
+    }
+    return n;
+
   }
   
   @Override
