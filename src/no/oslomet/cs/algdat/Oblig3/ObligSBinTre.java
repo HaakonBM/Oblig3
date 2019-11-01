@@ -25,6 +25,10 @@ public class ObligSBinTre<T> implements Beholder<T>
       this(verdi, null, null, forelder);
     }
 
+    public Node(T verdi) {
+      this(verdi, null,null, null);
+    }
+
     @Override
     public String toString(){ return "" + verdi;}
 
@@ -42,13 +46,36 @@ public class ObligSBinTre<T> implements Beholder<T>
     antall = 0;
     comp = c;
   }
-  
+  /////////////////////////// Oppgave-1 //////////////////////////////////
   @Override
-  public boolean leggInn(T verdi)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public boolean leggInn(T verdi) {
+
+   Node<T> p = rot;
+   Node<T> q=null;
+
+   int cmp=0;
+   while(p!=null){
+     q=p;
+     cmp= comp.compare(verdi, p.verdi);
+     p= cmp < 0? p.venstre: p.høyre;
+   }// end
+    p= new Node<T>(verdi);
+   if (q==null) rot = p;
+   else if (cmp < 0) q.venstre= p;
+   else q.høyre= p;
+
+   if (q!=null){
+     p.forelder=q;
+   }
+else {
+  p.forelder= null; 
+   }
+
+ antall++;
+return true;
+
   }
-  
+  ///////////////////////////////     Oppgave - 2 ////////////////////////////////////////
   @Override
   public boolean inneholder(T verdi)
   {
@@ -66,9 +93,44 @@ public class ObligSBinTre<T> implements Beholder<T>
 
     return false;
   }
-  
   @Override
-  public boolean fjern(T verdi)
+  public int antall()
+  {
+    return antall;
+  }
+
+  public int antall(T verdi) {
+    if(verdi==null) return 0;
+
+    int n=0; // Oppstartsverdi
+
+    Node<T> p = rot;
+    while (p != null) {
+      int cmp = comp.compare(verdi,p.verdi);
+      if (cmp < 0) p = p.venstre;      // går til venstre
+      else if (cmp > 0) p = p.høyre;   // går til høyre
+      else {
+        n++;
+        p = p.høyre;
+      }
+    }
+    return n;
+  }// slutt antall
+
+  @Override
+  public boolean tom()
+  {
+    return antall == 0;
+  }
+
+  @Override
+  public boolean fjern(T verdi) {
+
+    throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+  }// slutt fjern
+ ///////////////////////////////// Oppgave -3 //////////////////////////////////////////
+  private static <T> Node<T> nesteInorden(Node<T> p)
   {
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
@@ -78,22 +140,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
   
-  @Override
-  public int antall()
-  {
-    return antall;
-  }
-  
-  public int antall(T verdi)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
-  }
-  
-  @Override
-  public boolean tom()
-  {
-    return antall == 0;
-  }
+
   
   @Override
   public void nullstill()
@@ -101,10 +148,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
   
-  private static <T> Node<T> nesteInorden(Node<T> p)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
-  }
+
   
   @Override
   public String toString()
